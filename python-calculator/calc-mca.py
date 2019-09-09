@@ -1,24 +1,47 @@
-# Date: 2019-09-08
-# 
-# Description: Calculator takes in two integer values.
+# Description: Calculator takes in two values that
+# can be a floating point or integer number.
 # User chooses an option to carry out an equation.
+# Computer prints out the equation and resulting answer.
 
 import sys
 
 def greeting():
     print("******************************")
     print("Welcome to the Calculator")
+    print("******************************")
 
-# Gets the first number in the equation
+# Gets the first number in the equation and checks if it is a floating point or integer number.
 def operand1():
-    operand1 = input("Please enter the first number: ")
-    operand1 = int(operand1)
+    while True:
+        try:
+            operand1 = input("Please enter the first number: ")
+            if "." in operand1:
+                operand1 = float(operand1)
+                print("User entered the floating point number: %.5f" % operand1)
+                break
+            else:
+                operand1 = int(operand1)
+                print("User entered the integer number: %d" % operand1)
+                break
+        except ValueError:
+            print("Invalid Value. Enter a floating point or integer number!")
     return operand1
 
-# Gets the second number in the equation
+# Gets the second number in the equation and checks if it is a floating point or integer number.
 def operand2():
-    operand2 = input("Please enter the second number: ")
-    operand2 = int(operand2)
+    while True:
+        try:
+            operand2 = input("Please enter the second number: ")
+            if "." in operand2:
+                operand2 = float(operand2)
+                print("User entered the floating point number: %.5f" % operand2)
+                break
+            else:
+                operand2 = int(operand2)
+                print("User entered the integer number: %d" % operand2)
+                break
+        except ValueError:
+            print("Invalid Value. Enter a floating point or integer number!")
     return operand2
 
 # Displays the menu of operations on the calculator
@@ -31,39 +54,88 @@ def optionMenuDisplay():
         print("%d) %s" % (x, operations[x-1]))
     print("******************************")
 
-# Prompts for user to input a numbered option
+# Prompts the user to input a numbered option
 def optionOperator():
-    value = True
-    while value == True:
-        optionOp = input("Enter an Option between 1-7: ")
-        if int(optionOp) in range(1, 8):
-            value = False
-            return optionOp
+    while True:
+        try:
+            optionOp = input("Enter an Option between 1-7: ")
+            if int(optionOp) in range(1, 8):
+                break
+        except ValueError:
+            print("Invalid Option. Enter 1-7!")
+    return optionOp
 
-# Remember to include format for decimal points!!!
+# Operation for addition.
 def add(a, b):
-    c = a + b
-    return ("%d + %d = %d" % (a, b, c))
+    if type(a).__name__ == "float" or type(b).__name__ == "float":
+        a = float(a)
+        b = float(b)
+        c = a + b
+        statement = ("%s %.5f + %.5f = %.2f" % ("ADDITION: ", a, b, c))
+    else:
+        c = a + b
+        statement = ("%s %d + %d = %d" % ("ADDITION: ", a, b, c))
+    return statement
 
+# Operation for subtraction.
 def subtract(a, b):
-    c = a - b
-    return ("%d - %d = %d" % (a, b, c))
+    if type(a).__name__ == "float" or type(b).__name__ == "float":
+        a = float(a)
+        b = float(b)
+        c = a - b
+        statement = ("%s %.5f - %.5f = %.2f" % ("SUBTRACTION: ", a, b, c))
+    else:
+        c = a - b
+        statement = ("%s %d - %d = %d" % ("SUBTRACTION: ", a, b, c))
+    return statement
 
+# Operation for multiplication.
 def multiply(a, b):
-    c = a * b
-    return ("%d * %d = %d" % (a, b, c))
+    if type(a).__name__ == "float" or type(b).__name__ == "float":
+        a = float(a)
+        b = float(b)
+        c = a * b
+        statement = ("%s %.5f * %.5f = %.2f" % ("MULTIPLICATION: ", a, b, c))
+    else:
+        c = a * b
+        statement = ("%s %d * %d = %d" % ("MULTIPLICATION: ", a, b, c))
+    return statement
 
+# Operation for division.
 def divide(a, b):
-    c = a / b
-    return ("%d / %d = %d" % (a, b, c))
+    if type(a).__name__ == "float" or type(b).__name__ == "float":
+        a = float(a)
+        b = float(b)
+        c = a / b
+        statement = ("%s %.5f / %.5f = %.2f" % ("DIVISION: ", a, b, c))
+    else:
+        c = a / b
+        statement = ("%s %d / %d = %d" % ("DIVISION: ", a, b, c))
+    return statement
 
+# Operation for power.
 def power(a, b):
-    c = a ** b
-    return ("%d ^ %d = %d" % (a, b, c))
+    if type(a).__name__ == "float" or type(b).__name__ == "float":
+        a = float(a)
+        b = float(b)
+        c = a ** b
+        statement = ("%s %.5f ^ %.5f = %.2f" % ("POWER: ", a, b, c))
+    else:
+        c = a ** b
+        statement = ("%s %d ^ %d = %d" % ("POWER: ", a, b, c))
+    return statement
 
+# Operation for modulo
 def modulo(a, b):
-    c = a % b
-    return ("%d %% %d = %d" % (a, b, c))
+    if type(a).__name__ == "float" or type(b).__name__ == "float":
+        a = float(a)
+        b = float(b)
+        c = a % b
+        statement = ("%s %.5f %% %.5f = %.2f" % ("MODULO: ", a, b, c))
+    else:
+        c = a % b
+        statement = ("%s %d %% %d = %d" % ("MODULO: ", a, b, c))
+    return statement
 
 def quit():
     return ("Calculator Program Quit")
@@ -83,9 +155,8 @@ def operation(optionOp, num1, num2):
     elif optionOp == "6":
         return modulo(num1, num2)
     elif optionOp == "7":
-        return quit()
-    else:
-        optionOperator()  
+        #return quit()
+        sys.exit("****End Calculator Program****") 
   
 def calculator():
     print("******************************")
@@ -97,19 +168,17 @@ def calculator():
     print("******************************")
 
 def playCalc():
-    game = True
-    while game == True:
-      value = input("Would you like to calculate an equation? Y / N\n")
-      if value == "Y":
-        calculator()
-      else:
-        game == False
-        print(quit())
-        sys.exit("****End Calculator Program****")
-      
+    greeting()
+    while True:
+        try:
+            value = input("Would you like to calculate an equation? Y / N\n")
+            if value == "Y":
+                calculator()
+            elif value == "N":
+                print(quit())
+                sys.exit("****End Calculator Program****")
+                break
+        except ValueError:
+            print("Invalid Input. Y or N?")
 
-greeting()
 playCalc()
-
-#Need to do decimal places...
-#Fix format on %
